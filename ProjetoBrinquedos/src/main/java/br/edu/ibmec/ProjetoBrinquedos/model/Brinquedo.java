@@ -1,21 +1,36 @@
 package br.edu.ibmec.ProjetoBrinquedos.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
+@Table (name = "TDS_TB_Brinquedos")
 public class Brinquedo
 {
-    @id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @NotBlank
+    @Size(min = 2, max = 100)
     private String nome;
+
+    @NotBlank
     private String tipo;
+
+    @Min(0)
+    @Max(15)
     private int classificacao;
+
+    @NotBlank
+    @Pattern(regexp = "P | M | G")
     private String tamanho;
+
+    @NotNull
+    @Positive
     private double preco;
+
+    public Brinquedo() {}
 
     public long getId()
     {
@@ -25,7 +40,6 @@ public class Brinquedo
     {
         this.id = id;
     }
-
     public String getNome()
     {
         return nome;
