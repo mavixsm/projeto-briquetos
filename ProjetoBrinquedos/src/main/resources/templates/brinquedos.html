@@ -1,10 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brinquedos – Esporte Kids</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+
+<header class="topo">
+    <div class="container">
+        <a th:href="@{/}" class="logo">Esporte<span>Kids</span></a>
+        <nav class="menu">
+            <a th:href="@{/painel}">Brinquedos</a>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin}">Admin</a>
+            <span class="usuario">Olá, <strong sec:authentication="name">usuário</strong></span>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-contorno btn-pequeno">Sair</button>
+            </form>
+        </nav>
+    </div>
+</header>
+
+<main class="pagina">
+    <div class="container">
+
+        <div class="cabecalho-pagina">
+            <div>
+                <h1>Catálogo de brinquedos</h1>
+                <p>
+                    Seu perfil:
+                    <span sec:authorize="hasRole('ADMIN')" class="etiqueta etiqueta-admin">ADMIN</span>
+                    <span sec:authorize="hasRole('USER')" class="etiqueta">USER</span>
+                </p>
+            </div>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin}" class="btn btn-laranja">Gerenciar brinquedos</a>
+        </div>
+
+        <div sec:authorize="hasRole('USER')" class="alerta alerta-info">
+            Você tem acesso somente para consulta. Cadastro, edição e exclusão são exclusivos do perfil ADMIN.
+        </div>
+
+        <div class="painel">
+            <div class="tabela-wrapper">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Classificação</th>
+                        <th>Tamanho</th>
+                        <th>Preço</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="b : ${brinquedos}">
+                        <td th:text="${b.id}">1</td>
+                        <td th:text="${b.nome}">Bola de futebol</td>
+                        <td th:text="${b.tipo}">Bola</td>
+                        <td th:text="${b.classificacao} + ' anos'">8 anos</td>
+                        <td th:text="${b.tamanho}">M</td>
+                        <td class="preco"
+                            th:text="${'R$ ' + #numbers.formatDecimal(b.preco, 1, 'POINT', 2, 'COMMA')}">R$ 79,90</td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(brinquedos)}">
+                        <td colspan="6" class="vazio">Nenhum brinquedo cadastrado ainda.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<footer class="rodape">
+    <div class="container">
+        Esporte Kids · AC4 Ibmec · Mari e Maria
+    </div>
+</footer>
 
 </body>
 </html>

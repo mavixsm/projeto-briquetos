@@ -1,0 +1,402 @@
+/* =========================================================
+   Esporte Kids – estilo das telas (Thymeleaf)
+   ========================================================= */
+
+:root {
+    --azul: #1f6fb2;
+    --azul-escuro: #0b2a5b;
+    --laranja: #ff8a1f;
+    --verde: #2fa84f;
+    --vermelho: #d64545;
+    --fundo: #f4f7fb;
+    --branco: #ffffff;
+    --texto: #1d2433;
+    --texto-suave: #5b6478;
+    --borda: #dbe3ee;
+    --raio: 14px;
+    --sombra: 0 6px 20px rgba(11, 42, 91, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--fundo);
+    color: var(--texto);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    color: var(--azul);
+    text-decoration: none;
+}
+
+main {
+    flex: 1;
+}
+
+.container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ---------- Cabeçalho ---------- */
+.topo {
+    background: var(--azul-escuro);
+    color: var(--branco);
+    padding: 14px 0;
+}
+
+.topo .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--branco);
+    letter-spacing: 0.5px;
+}
+
+.logo span {
+    color: var(--laranja);
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.menu a {
+    color: #dbe6f5;
+    font-weight: 600;
+}
+
+.menu a:hover {
+    color: var(--branco);
+}
+
+.usuario {
+    font-size: 0.9rem;
+    color: #b9c8df;
+}
+
+.menu form {
+    display: inline;
+}
+
+/* ---------- Botões ---------- */
+.btn {
+    display: inline-block;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 22px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s, opacity 0.15s;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    opacity: 0.92;
+}
+
+.btn-laranja { background: var(--laranja); color: var(--branco); }
+.btn-azul { background: var(--azul); color: var(--branco); }
+.btn-verde { background: var(--verde); color: var(--branco); }
+.btn-vermelho { background: var(--vermelho); color: var(--branco); }
+.btn-contorno { background: transparent; color: var(--branco); border: 2px solid var(--branco); }
+.btn-pequeno { padding: 6px 14px; font-size: 0.85rem; }
+.btn-bloco { width: 100%; }
+
+/* ---------- Landing page ---------- */
+.hero {
+    background: linear-gradient(135deg, var(--azul) 0%, var(--azul-escuro) 100%);
+    color: var(--branco);
+    padding: 80px 0 90px;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 2.6rem;
+    line-height: 1.2;
+    margin-bottom: 16px;
+}
+
+.hero p {
+    font-size: 1.15rem;
+    color: #dbe6f5;
+    max-width: 620px;
+    margin: 0 auto 30px;
+}
+
+.hero .acoes {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.secao {
+    padding: 60px 0;
+}
+
+.secao h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: var(--azul-escuro);
+    margin-bottom: 36px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+}
+
+.card {
+    background: var(--branco);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+    padding: 28px 22px;
+    text-align: center;
+}
+
+.card .icone {
+    font-size: 2.4rem;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    color: var(--azul-escuro);
+    margin-bottom: 6px;
+}
+
+.card p {
+    color: var(--texto-suave);
+    font-size: 0.95rem;
+}
+
+/* ---------- Login ---------- */
+.pagina-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+}
+
+.caixa-login {
+    background: var(--branco);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+    padding: 40px 34px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.caixa-login h1 {
+    color: var(--azul-escuro);
+    text-align: center;
+    margin-bottom: 6px;
+}
+
+.caixa-login .subtitulo {
+    text-align: center;
+    color: var(--texto-suave);
+    margin-bottom: 26px;
+}
+
+.dica-usuarios {
+    margin-top: 22px;
+    font-size: 0.85rem;
+    color: var(--texto-suave);
+    background: var(--fundo);
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+
+/* ---------- Formulários ---------- */
+.campo {
+    margin-bottom: 16px;
+}
+
+.campo label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 0.92rem;
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    background: var(--branco);
+}
+
+.campo input:focus,
+.campo select:focus {
+    outline: none;
+    border-color: var(--azul);
+    box-shadow: 0 0 0 3px rgba(31, 111, 178, 0.15);
+}
+
+.campo.erro input,
+.campo.erro select {
+    border-color: var(--vermelho);
+}
+
+.msg-erro-campo {
+    color: var(--vermelho);
+    font-size: 0.82rem;
+    margin-top: 4px;
+}
+
+.grade-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0 16px;
+}
+
+/* ---------- Alertas ---------- */
+.alerta {
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    font-size: 0.92rem;
+}
+
+.alerta-erro { background: #fdeaea; color: #8f2424; }
+.alerta-sucesso { background: #e6f6ea; color: #1d6b33; }
+.alerta-info { background: #e8f1fb; color: #164f80; }
+
+/* ---------- Páginas internas ---------- */
+.pagina {
+    padding: 40px 0 60px;
+}
+
+.cabecalho-pagina {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.cabecalho-pagina h1 {
+    color: var(--azul-escuro);
+    font-size: 1.8rem;
+}
+
+.cabecalho-pagina p {
+    color: var(--texto-suave);
+}
+
+.painel {
+    background: var(--branco);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+    padding: 26px;
+    margin-bottom: 28px;
+}
+
+.painel h2 {
+    color: var(--azul-escuro);
+    font-size: 1.2rem;
+    margin-bottom: 18px;
+}
+
+/* ---------- Tabela ---------- */
+.tabela-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.93rem;
+}
+
+thead th {
+    background: var(--azul-escuro);
+    color: var(--branco);
+    text-align: left;
+    padding: 12px 14px;
+    font-weight: 600;
+}
+
+thead th:first-child { border-top-left-radius: 10px; }
+thead th:last-child { border-top-right-radius: 10px; }
+
+tbody td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--borda);
+}
+
+tbody tr:hover {
+    background: #f8fbff;
+}
+
+.vazio {
+    text-align: center;
+    color: var(--texto-suave);
+    padding: 30px;
+}
+
+.etiqueta {
+    display: inline-block;
+    background: #e8f1fb;
+    color: var(--azul);
+    border-radius: 999px;
+    padding: 2px 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.etiqueta-admin {
+    background: #fff0e1;
+    color: #b35a00;
+}
+
+.preco {
+    font-weight: 700;
+    color: var(--verde);
+    white-space: nowrap;
+}
+
+/* ---------- Rodapé ---------- */
+.rodape {
+    background: var(--azul-escuro);
+    color: #b9c8df;
+    text-align: center;
+    padding: 18px 0;
+    font-size: 0.88rem;
+}
+
+/* ---------- Celular ---------- */
+@media (max-width: 600px) {
+    .hero { padding: 56px 0 64px; }
+    .hero h1 { font-size: 1.9rem; }
+    .cabecalho-pagina h1 { font-size: 1.5rem; }
+    .painel { padding: 18px; }
+}

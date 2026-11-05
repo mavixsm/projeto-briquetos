@@ -1,10 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login – Esporte Kids</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+
+<header class="topo">
+    <div class="container">
+        <a th:href="@{/}" class="logo">Esporte<span>Kids</span></a>
+        <nav class="menu">
+            <a th:href="@{/}">Voltar ao início</a>
+        </nav>
+    </div>
+</header>
+
+<main class="pagina-login">
+    <div class="caixa-login">
+        <h1>Entrar</h1>
+        <p class="subtitulo">Acesse com seu usuário e senha</p>
+
+        <!-- Spring Security redireciona para /login?error quando a senha está errada -->
+        <div th:if="${param.error}" class="alerta alerta-erro">
+            Usuário ou senha inválidos.
+        </div>
+
+        <!-- E para /login?logout depois de sair -->
+        <div th:if="${param.logout}" class="alerta alerta-sucesso">
+            Você saiu do sistema.
+        </div>
+
+        <!-- th:action já inclui o token CSRF automaticamente -->
+        <form th:action="@{/login}" method="post">
+            <div class="campo">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" name="username" required autofocus>
+            </div>
+            <div class="campo">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-azul btn-bloco">Entrar</button>
+        </form>
+
+        <div class="dica-usuarios">
+            <strong>Usuários de teste:</strong><br>
+            user / 123 → perfil USER<br>
+            admin / 123 → perfil ADMIN
+        </div>
+    </div>
+</main>
+
+<footer class="rodape">
+    <div class="container">
+        Esporte Kids · AC4 Ibmec · Mari e Maria
+    </div>
+</footer>
 
 </body>
 </html>

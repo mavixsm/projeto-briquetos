@@ -1,10 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin – Esporte Kids</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+
+<header class="topo">
+    <div class="container">
+        <a th:href="@{/}" class="logo">Esporte<span>Kids</span></a>
+        <nav class="menu">
+            <a th:href="@{/painel}">Brinquedos</a>
+            <a th:href="@{/admin}">Admin</a>
+            <span class="usuario">Olá, <strong sec:authentication="name">admin</strong></span>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-contorno btn-pequeno">Sair</button>
+            </form>
+        </nav>
+    </div>
+</header>
+
+<main class="pagina">
+    <div class="container">
+
+        <div class="cabecalho-pagina">
+            <div>
+                <h1>Área do administrador</h1>
+                <p>Cadastre e exclua brinquedos do catálogo.</p>
+            </div>
+            <span class="etiqueta etiqueta-admin">ADMIN</span>
+        </div>
+
+        <div th:if="${mensagem}" class="alerta alerta-sucesso" th:text="${mensagem}">Brinquedo salvo!</div>
+
+        <!-- ===== Formulário de cadastro (usa as validações da entidade) ===== -->
+        <div class="painel">
+            <h2>Novo brinquedo</h2>
+
+            <form th:action="@{/admin/brinquedos}" th:object="${brinquedo}" method="post">
+                <div class="grade-form">
+                    <div class="campo" th:classappend="${#fields.hasErrors('nome')} ? 'erro'">
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" th:field="*{nome}" placeholder="Bola de futebol">
+                        <div class="msg-erro-campo" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+                    </div>
+
+                    <div class="campo" th:classappend="${#fields.hasErrors('tipo')} ? 'erro'">
+                        <label for="tipo">Tipo</label>
+                        <select id="tipo" th:field="*{tipo}">
+                            <option value="">Selecione</option>
+                            <option value="Bola">Bola</option>
+                            <option value="Raquete">Raquete</option>
+                            <option value="Patins">Patins</option>
+                            <option value="Skate">Skate</option>
+                            <option value="Bicicleta">Bicicleta</option>
+                            <option value="Acessório">Acessório</option>
+                        </select>
+                        <div class="msg-erro-campo" th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}"></div>
+                    </div>
+
+                    <div class="campo" th:classappend="${#fields.hasErrors('classificacao')} ? 'erro'">
+                        <label for="classificacao">Classificação (idade)</label>
+                        <input type="number" id="classificacao" th:field="*{classificacao}" min="0" max="15" placeholder="8">
+                        <div class="msg-erro-campo" th:if="${#fields.hasErrors('classificacao')}" th:errors="*{classificacao}"></div>
+                    </div>
+
+                    <div class="campo" th:classappend="${#fields.hasErrors('tamanho')} ? 'erro'">
+                        <label for="tamanho">Tamanho</label>
+                        <select id="tamanho" th:field="*{tamanho}">
+                            <option value="">Selecione</option>
+                            <option value="P">P</option>
+                            <option value="M">M</option>
+                            <option value="G">G</option>
+                        </select>
+                        <div class="msg-erro-campo" th:if="${#fields.hasErrors('tamanho')}" th:errors="*{tamanho}"></div>
+                    </div>
+
+                    <div class="campo" th:classappend="${#fields.hasErrors('preco')} ? 'erro'">
+                        <label for="preco">Preço (R$)</label>
+                        <input type="number" id="preco" th:field="*{preco}" step="0.01" min="0" placeholder="79.90">
+                        <div class="msg-erro-campo" th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}"></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-verde">Salvar brinquedo</button>
+            </form>
+        </div>
+
+        <!-- ===== Lista com exclusão ===== -->
+        <div class="painel">
+            <h2>Brinquedos cadastrados</h2>
+            <div class="tabela-wrapper">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Classificação</th>
+                        <th>Tamanho</th>
+                        <th>Preço</th>
+                        <th>Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="b : ${brinquedos}">
+                        <td th:text="${b.id}">1</td>
+                        <td th:text="${b.nome}">Bola de futebol</td>
+                        <td th:text="${b.tipo}">Bola</td>
+                        <td th:text="${b.classificacao} + ' anos'">8 anos</td>
+                        <td th:text="${b.tamanho}">M</td>
+                        <td class="preco"
+                            th:text="${'R$ ' + #numbers.formatDecimal(b.preco, 1, 'POINT', 2, 'COMMA')}">R$ 79,90</td>
+                        <td>
+                            <form th:action="@{/admin/brinquedos/{id}/excluir(id=${b.id})}" method="post"
+                                  onsubmit="return confirm('Excluir este brinquedo?');">
+                                <button type="submit" class="btn btn-vermelho btn-pequeno">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(brinquedos)}">
+                        <td colspan="7" class="vazio">Nenhum brinquedo cadastrado ainda.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<footer class="rodape">
+    <div class="container">
+        Esporte Kids · AC4 Ibmec · Mari e Maria
+    </div>
+</footer>
 
 </body>
 </html>

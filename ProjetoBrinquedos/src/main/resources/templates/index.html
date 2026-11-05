@@ -1,10 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esporte Kids – Brinquedos Esportivos</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+
+<header class="topo">
+    <div class="container">
+        <a th:href="@{/}" class="logo">Esporte<span>Kids</span></a>
+        <nav class="menu">
+            <a th:href="@{/}">Início</a>
+
+            <!-- Visitante (não logado) -->
+            <a sec:authorize="isAnonymous()" th:href="@{/login}" class="btn btn-laranja btn-pequeno">Entrar</a>
+
+            <!-- Usuário logado -->
+            <a sec:authorize="isAuthenticated()" th:href="@{/painel}">Brinquedos</a>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin}">Admin</a>
+            <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-contorno btn-pequeno">Sair</button>
+            </form>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <h1>Brinquedos esportivos para crianças de até 15 anos</h1>
+            <p>Bolas, raquetes, patins, skates e muito mais para a criançada se movimentar com segurança e diversão.</p>
+            <div class="acoes">
+                <a th:href="@{/login}" class="btn btn-laranja">Acessar o sistema</a>
+                <a href="#categorias" class="btn btn-contorno">Conhecer categorias</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="secao" id="categorias">
+        <div class="container">
+            <h2>Nossas categorias</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="icone">⚽</div>
+                    <h3>Bolas</h3>
+                    <p>Futebol, basquete e vôlei em tamanhos adequados para cada idade.</p>
+                </div>
+                <div class="card">
+                    <div class="icone">🎾</div>
+                    <h3>Raquetes</h3>
+                    <p>Tênis, badminton e frescobol, leves e fáceis de segurar.</p>
+                </div>
+                <div class="card">
+                    <div class="icone">🛼</div>
+                    <h3>Patins e skates</h3>
+                    <p>Modelos ajustáveis que acompanham o crescimento.</p>
+                </div>
+                <div class="card">
+                    <div class="icone">🏅</div>
+                    <h3>Acessórios</h3>
+                    <p>Cones, redes, cordas e equipamentos de proteção.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="rodape">
+    <div class="container">
+        Esporte Kids · AC4 Ibmec · Mari e Maria
+    </div>
+</footer>
 
 </body>
 </html>
