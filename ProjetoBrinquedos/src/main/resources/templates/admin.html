@@ -39,9 +39,12 @@
 
         <!-- ===== Formulário de cadastro (usa as validações da entidade) ===== -->
         <div class="painel">
-            <h2>Novo brinquedo</h2>
+            <h2 th:text="${brinquedo.id > 0} ? 'Editar brinquedo' : 'Novo brinquedo'">
+                Novo brinquedo
+            </h2>
 
-            <form th:action="@{/admin/brinquedos}" th:object="${brinquedo}" method="post">
+            <form th:action="@{/admin/salvar}" th:object="${brinquedo}" method="post">
+                <input type="hidden" th:field="*{id}">
                 <div class="grade-form">
                     <div class="campo" th:classappend="${#fields.hasErrors('nome')} ? 'erro'">
                         <label for="nome">Nome</label>
@@ -87,7 +90,15 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-verde">Salvar brinquedo</button>
+                <button type="submit" class="btn btn-verde"
+                        th:text="${brinquedo.id != null} ? 'Salvar alterações' : 'Cadastrar brinquedo'">
+                    Cadastrar brinquedo
+                </button>
+                <a th:if="${brinquedo.id > 0 and brinquedo.id > 0}"
+                   th:href="@{/admin}"
+                   class="btn btn-contorno">
+                    Cancelar edição
+                </a>
             </form>
         </div>
 
@@ -117,9 +128,13 @@
                         <td class="preco"
                             th:text="${'R$ ' + #numbers.formatDecimal(b.preco, 1, 'POINT', 2, 'COMMA')}">R$ 79,90</td>
                         <td>
-                            <form th:action="@{/admin/brinquedos/{id}/excluir(id=${b.id})}" method="post"
-                                  onsubmit="return confirm('Excluir este brinquedo?');">
-                                <button type="submit" class="btn btn-vermelho btn-pequeno">Excluir</button>
+                            <a th:href="@{/admin/brinquedos/{id}/editar(id=${b.id})}"
+                               class="btn btn-contorno btn-pequeno">
+                                Editar
+                            </a>
+                            <form th:action="@{/admin/brinquedos/{id}/excluir(id=${b.id})}"
+                                  method="post" onsubmit="return confirm('Excluir este brinquedo?');">
+                                <button type="submit" class="btn btn-vermelho btn-pequeno"> Excluir </button>
                             </form>
                         </td>
                     </tr>

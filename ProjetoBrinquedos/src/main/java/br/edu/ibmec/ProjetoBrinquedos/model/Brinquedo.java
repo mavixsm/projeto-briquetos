@@ -8,7 +8,7 @@ import jakarta.validation.constraints.*;
 public class Brinquedo
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotBlank

@@ -400,3 +400,33 @@ tbody tr:hover {
     .cabecalho-pagina h1 { font-size: 1.5rem; }
     .painel { padding: 18px; }
 }
+
+/* Botão editar na tabela administrativa */
+.tabela-wrapper td .btn-contorno {
+    color: var(--azul);
+    border-color: var(--azul);
+}
+.tabela-wrapper td form {
+    display: inline-block;
+    margin-left: 8px;
+}
+
+.tabela-wrapper td a {
+    margin-right: 8px;
+}
+
+/* Botões do formulário administrativo */
+.painel form .btn-contorno {
+    color: var(--azul);
+    border: 2px solid var(--azul);
+    background: transparent;
+    margin-left: 8px;
+}
+
+.painel form .btn-contorno:hover {
+    background: #e8f1fb;
+}
+/* Esconder botão cancelar edição */
+#botaoCancelar {
+    display: none;
+}
