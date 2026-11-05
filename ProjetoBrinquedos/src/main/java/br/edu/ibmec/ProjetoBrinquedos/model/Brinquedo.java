@@ -23,7 +23,7 @@ public class Brinquedo
     private int classificacao;
 
     @NotBlank
-    @Pattern(regexp = "P | M | G")
+    @Pattern(regexp = "P|M|G")
     private String tamanho;
 
     @NotNull
