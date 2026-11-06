@@ -19,12 +19,26 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/login", "/css/**", "/error", "/h2-console/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/brinquedos/**", "/painel").hasAnyRole("USER", "ADMIN")
+
+                        .requestMatchers(HttpMethod.GET,
+                                "/brinquedos/**",
+                                "/painel",
+                                "/painel/**"
+                        ).hasAnyRole("USER", "ADMIN")
+
                         .anyRequest().hasRole("ADMIN")
                 )
-                .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/painel", true).permitAll())
+
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/painel", true)
+                        .permitAll()
+                )
+
                 .httpBasic(Customizer.withDefaults())
+
                 .csrf(csrf -> csrf.disable())
+
                 .headers(h -> h.frameOptions(f -> f.sameOrigin()));
 
         return http.build();
@@ -33,8 +47,15 @@ public class SecurityConfig {
     @Bean
     public InMemoryUserDetailsManager usuarios(PasswordEncoder encoder) {
         return new InMemoryUserDetailsManager(
-                User.withUsername("user").password(encoder.encode("123")).roles("USER").build(),
-                User.withUsername("admin").password(encoder.encode("123")).roles("ADMIN").build()
+                User.withUsername("user")
+                        .password(encoder.encode("123"))
+                        .roles("USER")
+                        .build(),
+
+                User.withUsername("admin")
+                        .password(encoder.encode("123"))
+                        .roles("ADMIN")
+                        .build()
         );
     }
 

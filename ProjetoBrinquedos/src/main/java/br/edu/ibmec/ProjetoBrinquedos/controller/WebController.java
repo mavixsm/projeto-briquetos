@@ -2,6 +2,7 @@ package br.edu.ibmec.ProjetoBrinquedos.controller;
 
 import br.edu.ibmec.ProjetoBrinquedos.model.Brinquedo;
 import br.edu.ibmec.ProjetoBrinquedos.repository.BrinquedoRepository;
+import br.edu.ibmec.ProjetoBrinquedos.service.BrinquedoService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,14 +11,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @Controller
 public class WebController {
 
     private final BrinquedoRepository repository;
+    private final BrinquedoService brinquedoService;
 
-    public WebController(BrinquedoRepository repository) {
+    public WebController(BrinquedoRepository repository,
+                         BrinquedoService brinquedoService) {
         this.repository = repository;
+        this.brinquedoService = brinquedoService;
     }
 
     @GetMapping("/")
@@ -31,15 +39,33 @@ public class WebController {
     }
 
     @GetMapping("/painel")
-    public String painel(Model model)
-    {
+    public String painel(Model model) {
         model.addAttribute("brinquedos", repository.findAll());
         return "brinquedos";
     }
 
+    // PESQUISAR BRINQUEDO PELO ID
+    @GetMapping("/painel/buscar")
+    public String buscarPorId(@RequestParam Long id, Model model) {
+
+        try {
+            Brinquedo brinquedo = brinquedoService.buscarPorId(id);
+
+            model.addAttribute("brinquedos", List.of(brinquedo));
+
+        } catch (ResponseStatusException e) {
+
+            model.addAttribute("brinquedos", List.of());
+
+            model.addAttribute("mensagem",
+                    "Nenhum brinquedo encontrado com esse ID.");
+        }
+
+        return "brinquedos";
+    }
+
     @GetMapping("/admin")
-    public String admin(Model model)
-    {
+    public String admin(Model model) {
         model.addAttribute("brinquedo", new Brinquedo());
         model.addAttribute("brinquedos", repository.findAll());
         return "admin";
@@ -48,10 +74,9 @@ public class WebController {
     @PostMapping("/admin/salvar")
     public String salvar(@Valid @ModelAttribute("brinquedo") Brinquedo brinquedo,
                          BindingResult resultado,
-                         Model model)
-    {
-        if (resultado.hasErrors())
-        {
+                         Model model) {
+
+        if (resultado.hasErrors()) {
             model.addAttribute("brinquedos", repository.findAll());
             return "admin";
         }
@@ -61,20 +86,22 @@ public class WebController {
     }
 
     @PostMapping("/admin/brinquedos/{id}/excluir")
-    public String excluir(@PathVariable Long id)
-    {
+    public String excluir(@PathVariable Long id) {
         repository.deleteById(id);
         return "redirect:/admin";
     }
 
     @GetMapping("/admin/brinquedos/{id}/editar")
-    public String editar(@PathVariable Long id, Model model)
-    {
+    public String editar(@PathVariable Long id, Model model) {
+
         Brinquedo brinquedo = repository.findById(id).orElseThrow(() ->
-                              new IllegalArgumentException("Brinquedo não encontrado"));
+                new IllegalArgumentException("Brinquedo não encontrado"));
+
         System.out.println("ID do brinquedo: " + brinquedo.getId());
+
         model.addAttribute("brinquedo", brinquedo);
         model.addAttribute("brinquedos", repository.findAll());
+
         return "admin";
     }
 }

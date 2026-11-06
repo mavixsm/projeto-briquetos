@@ -91,7 +91,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-verde"
-                        th:text="${brinquedo.id != null} ? 'Salvar alterações' : 'Cadastrar brinquedo'">
+                        th:text="${brinquedo.id > 0} ? 'Salvar alterações' : 'Cadastrar brinquedo'">
                     Cadastrar brinquedo
                 </button>
                 <a th:if="${brinquedo.id > 0 and brinquedo.id > 0}"
