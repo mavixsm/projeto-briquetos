@@ -66,7 +66,6 @@ O projeto foi gerado em [start.spring.io](https://start.spring.io) com esta conf
   * Thymeleaf
   * Spring Boot DevTools
 
-![Configuração no Spring Initializr](docs/img/spring-initializr.png)
 
 ---
 
@@ -329,19 +328,16 @@ Configurada na classe `SecurityConfig`:
 
 Resposta: **200 OK**, com o brinquedo salvo e o `id` gerado.
 
-![POST](docs/img/postman-post.png)
 
 ### 2. Listar – `GET /brinquedos`
 
 Resposta: **200 OK**, com a lista de brinquedos.
 
-![GET todos](docs/img/postman-get.png)
 
 ### 3. Buscar por ID – `GET /brinquedos/1`
 
 Resposta: **200 OK**, com o brinquedo. Se o ID não existir, a resposta é **404 Not Found**.
 
-![GET por id](docs/img/postman-get-id.png)
 
 ### 4. Atualizar – `PUT /brinquedos/1`
 
@@ -357,13 +353,11 @@ Resposta: **200 OK**, com o brinquedo. Se o ID não existir, a resposta é **404
 
 Resposta: **200 OK**, com o brinquedo atualizado.
 
-![PUT](docs/img/postman-put.png)
 
 ### 5. Excluir – `DELETE /brinquedos/1`
 
 Resposta: **204 No Content**.
 
-![DELETE](docs/img/postman-delete.png)
 
 ### 6. Erro de validação
 
@@ -379,13 +373,11 @@ Resposta: **204 No Content**.
 
 O brinquedo **não é salvo**, porque os dados violam as validações da entidade.
 
-![Erro de validação](docs/img/postman-validacao.png)
 
 ### 7. Acesso negado
 
 `POST /brinquedos` feito com o usuário `user` resulta em **403 Forbidden**, porque só o ADMIN pode cadastrar.
 
-![Acesso negado](docs/img/postman-403.png)
 
 ---
 
@@ -398,24 +390,11 @@ O brinquedo **não é salvo**, porque os dados violam as validações da entidad
 | Catálogo | `/painel` | USER e ADMIN |
 | Administração | `/admin` | Só ADMIN |
 
-### Landing page
-![Landing page](docs/img/landing.png)
-
-### Login
-![Login](docs/img/login.png)
-
-### Catálogo (logado como USER)
-O USER só consulta. Aparece um aviso de que cadastro, edição e exclusão são exclusivos do ADMIN.
-
-![Painel USER](docs/img/painel-user.png)
-
-### USER tentando acessar /admin → 403
-![403](docs/img/403-user-admin.png)
-
-### Área do administrador
-Formulário de cadastro e lista com o botão de exclusão.
-
-![Admin](docs/img/admin.png)
+* **Landing page:** página pública com as categorias da loja e o botão "Entrar".
+* **Login:** formulário de login, com mensagem de erro para senha errada.
+* **Catálogo:** lista de brinquedos vinda do banco. O USER só consulta e vê um aviso de que cadastro, edição e exclusão são exclusivos do ADMIN.
+* **USER acessando /admin:** o Spring Security bloqueia e retorna erro 403.
+* **Área do administrador:** formulário de cadastro e edição, com as mensagens de validação, e a lista com os botões de editar e excluir.
 
 ---
 
@@ -442,7 +421,6 @@ O banco é salvo **em arquivo** (`./data/brinquedosdb`), então os dados continu
 3. Em **User**, coloque `sa` e deixe a senha vazia. Clique em **Connect**.
 4. Rode `SELECT * FROM TDS_TB_BRINQUEDOS;`.
 
-![H2 Console](docs/img/h2-console.png)
 
 ---
 
